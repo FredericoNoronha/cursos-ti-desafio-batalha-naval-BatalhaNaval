@@ -28,7 +28,7 @@ int main() {
         for (int j = 0; j < 10; j++) {
             // Linha 3, colunas D,E,F  → j=3,4,5
             // Coluna H (j=7), linhas 6,7,8 → i=6,7,8
-            if ((i == 3 && (j >= 3 && j <= 5)) ||
+            if ((i == 3 && (j >= 3  && j <= 5)) ||
                 ((i >= 6 && i <= 8) && j == 7)) {
                 printf(" 3 ");
             } else {
