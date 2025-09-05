@@ -46,8 +46,36 @@ int main() {
 
 int main() {
     char linha[] = {'A','B','C','D','E','F','G','H','I','J'};
+    int tab[10][10] = {0}; // 0 = água, 3 = parte de navio
 
     printf("Tabuleiro de Batalha Naval\n\n");
+
+    // -----------------------------
+    // Marcação das posições (SEM if)
+    // -----------------------------
+
+    // 1) Linha 3 -> índice 2; colunas D..F (D=3,E=3,F=3) 
+    for (int j = 3; j <= 5; j++) tab[2][j] = 3;
+
+    // 2) Coluna H ( H=3, H=5, H6 )
+    for (int i = 3; i <= 5; i++) tab[i][7] = 3;
+
+    // 3) Navio 1: DIAGONAL PRINCIPAL (B3, C4, D5)
+    int i0 = 0, j0 = -1;
+    for (int k = 2; k < 5; k++) {
+        tab[i0 + k][j0 + k] = 3;  
+    }
+
+    // 4) Navio 2: DIAGONAL SECUNDÁRIA (D7, C8, B9)
+    //    Ponto inicial (6,3) => D7, 3: (6,3),(7,2),(8,1) -> D7, C8, B9.
+    int i1 = 6, j1 = 3;
+    for (int k = 0; k < 3; k++) {
+        tab[i1 + k][j1 - k] = 3;
+    }
+
+    // -----------------------------
+    // Impressão
+    // -----------------------------
 
     // Cabeçalho (A-J)
     printf("   ");
@@ -57,31 +85,17 @@ int main() {
     printf("\n");
 
     // Corpo do tabuleiro
-    for (int i = 1; i <= 10; i++) {
-        printf("%2d ", i);
-
+    for (int i = 0; i < 10; i++) {
+        printf("%2d ", i + 1);
         for (int j = 0; j < 10; j++) {
-            /* Marcações:
-               - Linha 3, colunas D,E,F         -> (i==3, j=3..5)
-               - Coluna H, linhas 6,7,8         -> (j==7, i=6..8)
-               - Navio 1: B7, C6, D5            -> (7,1), (6,2), (5,3)
-               - Navio 2: D8, E7, F6            -> (8,3), (7,4), (6,5)
-            */
-            if ( (i == 3 && (j >= 3 && j <= 5)) ||          // linha 3: D,E,F
-                 ((i >= 6 && i <= 8) && j == 7) ||          // coluna H: linhas 6,7,8
-                 (i == 7 && j == 1) || (i == 6 && j == 2) || (i == 5 && j == 3) || // navio 1
-                 (i == 8 && j == 3) || (i == 7 && j == 4) || (i == 6 && j == 5)    // navio 2
-               ) {
-                printf(" 3 ");
-            } else {
-                printf(" 0 ");
-            }
+            printf(" %d ", tab[i][j]);
         }
         printf("\n");
     }
 
     return 0;
 }
+
     // Nível Mestre - Habilidades Especiais com Matrizes
     // Sugestão: Crie matrizes para representar habilidades especiais como cone, cruz, e octaedro.
     // Sugestão: Utilize estruturas de repetição aninhadas para preencher as áreas afetadas por essas habilidades no tabuleiro.
